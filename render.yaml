@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: rant2resolve-backend
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://USERNAME:PASSWORD@cluster.mongodb.net/Rant2Resolve?retryWrites=true&w=majority
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: GEMINI_API_KEY
+        sync: false
+
+  - type: static-site
+    name: rant2resolve-frontend
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://rant2resolve-backend.onrender.com
+      - key: GEMINI_API_KEY
+        sync: false

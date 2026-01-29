@@ -25,9 +25,16 @@ const app = express();
 const server = http.createServer(app);
 
 // Improved Socket.io CORS
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:5000',
+  process.env.FRONTEND_URL || 'https://rant2resolve-frontend.onrender.com'
+];
+
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
   }
@@ -38,7 +45,7 @@ setIO(io);
 
 // Robust Middleware Configuration
 app.use(cors({
-  origin: '*', // In production, replace with your frontend URL
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
   credentials: true
