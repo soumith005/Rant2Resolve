@@ -2,7 +2,7 @@ import { io, Socket } from 'socket.io-client';
 import { ChatMessage } from '../types';
 import { api } from './api';
 
-const SOCKET_URL = 'http://localhost:5000';
+const SOCKET_URL = process.env.VITE_API_URL || 'http://localhost:5000';
 
 class ChatService {
   private socket: Socket | null = null;

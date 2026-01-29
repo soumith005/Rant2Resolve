@@ -119,7 +119,8 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   useEffect(() => {
     if (!isAuthenticated || !user?.id) return;
 
-    const socket = io('http://localhost:5000');
+    const socketUrl = process.env.VITE_API_URL || 'http://localhost:5000';
+    const socket = io(socketUrl);
 
     socket.on('connect', () => {
       console.log('📢 Notification socket connected');

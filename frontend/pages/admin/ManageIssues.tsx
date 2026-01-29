@@ -84,7 +84,8 @@ const ManageIssues: React.FC = () => {
       
       // Emit real-time event to other users
       try {
-        const socket = io('http://localhost:5000', { reconnection: false });
+        const socketUrl = process.env.VITE_API_URL || 'http://localhost:5000';
+        const socket = io(socketUrl, { reconnection: false });
         socket.emit('issue_status_updated', {
           issueId,
           status: newStatus,
